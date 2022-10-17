@@ -50,6 +50,6 @@ public class cardDeliveryOrderTest {
         $("[data-test-id='phone'] input").setValue("+79000000000");
         $("[data-test-id='agreement']").click();
         $$("button").find(Condition.exactText("Забронировать")).click();
-        $("[data-test-id='notification'] button").shouldBe(Condition.visible, Duration.ofSeconds(45));
+        $("[data-test-id='notification'] button").shouldBe(Condition.visible, Duration.ofSeconds(15));
     }
 }

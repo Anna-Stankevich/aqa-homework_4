@@ -10,22 +10,35 @@ import java.time.format.DateTimeFormatter;
 import static com.codeborne.selenide.Selenide.*;
 
 public class cardDeliveryOrderTest {
+   
+    WebDriver driver;
 
-    String generateDate(int days){
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    @BeforeAll
+    public static void setupClass() {
+
+        WebDriverManager.chromedriver().setup();
     }
-    
+
     @BeforeEach
-    void setUp() {
-        open("http://localhost:9999/");
+    void setupTest() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
+        open("http://localhost:9999");
     }
 
     @AfterEach
     void tearDown() {
-        clearBrowserCookies();
-        closeWebDriver();
+        driver.quit();
+        driver = null;
     }
-
+    
+    String generateDate(int days){
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+    }   
+    
     @Test
     void shouldTestForm(){
         $("[data-test-id='city'] input").setValue("Казань");

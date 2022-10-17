@@ -11,32 +11,19 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class cardDeliveryOrderTest {
 
-    WebDriver driver;
-
-    @BeforeAll
-    public static void setupClass() {
-
-        WebDriverManager.chromedriver().setup();
+    String generateDate(int days){
+        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
-
+    
     @BeforeEach
-    void setupTest() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
-        open("http://localhost:9999");
+    void setUp() {
+        open("http://localhost:9999/");
     }
 
     @AfterEach
     void tearDown() {
-        driver.quit();
-        driver = null;
-    }
-
-    String generateDate(int days){
-        return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
+        clearBrowserCookies();
+        closeWebDriver();
     }
 
     @Test

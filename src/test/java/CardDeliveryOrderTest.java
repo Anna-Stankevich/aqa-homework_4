@@ -9,31 +9,7 @@ import java.time.*;
 import java.time.format.DateTimeFormatter;
 import static com.codeborne.selenide.Selenide.*;
 
-public class cardDeliveryOrderTest {
-   
-    WebDriver driver;
-
-    @BeforeAll
-    public static void setupClass() {
-
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @BeforeEach
-    void setupTest() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--disable-dev-shm-usage");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
-        open("http://localhost:9999");
-    }
-
-    @AfterEach
-    void tearDown() {
-        driver.quit();
-        driver = null;
-    }
+public class CardDeliveryOrderTest {
     
     String generateDate(int days){
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
@@ -51,5 +27,6 @@ public class cardDeliveryOrderTest {
         $("[data-test-id='agreement']").click();
         $$("button").find(Condition.exactText("Забронировать")).click();
         $("[data-test-id='notification'] button").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + planningDate), Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
 }

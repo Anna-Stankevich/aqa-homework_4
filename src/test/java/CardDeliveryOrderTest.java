@@ -11,6 +11,11 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class CardDeliveryOrderTest {
     
+    @BeforeEach
+    void setupTest() {
+        open("http://localhost:9999");
+    }
+    
     String generateDate(int days){
         return LocalDate.now().plusDays(days).format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }   

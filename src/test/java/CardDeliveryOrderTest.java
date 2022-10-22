@@ -28,6 +28,7 @@ public class CardDeliveryOrderTest {
         $("[data-test-id='phone'] input").setValue("+79000000000");
         $("[data-test-id='agreement']").click();
         $$("button").find(Condition.exactText("Забронировать")).click();
-        $("[data-test-id='notification'] button").shouldBe(Condition.visible, Duration.ofSeconds(20));
+        $("[data-test-id='notification'] button").shouldBe(Condition.visible, Duration.ofSeconds(15));
+        $(".notification__content").shouldHave(Condition.text("Встреча успешно забронирована на " + date), Duration.ofSeconds(15)).shouldBe(Condition.visible);
     }
 }
